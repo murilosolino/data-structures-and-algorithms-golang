@@ -8,10 +8,11 @@ type Node struct {
 }
 
 func newNode(value int) *Node {
-	return &Node{
+	node := &Node{
 		Value: value,
 		next:  nil,
 	}
+	return node
 }
 
 type LinkedList struct {
@@ -47,6 +48,28 @@ func (l *LinkedList) AddToFront(value int) {
 	l.tail = newNode
 }
 
+func (l *LinkedList) AddInTheMiddle(value int) {
+	if l.head == nil {
+		l.head = newNode(value)
+		l.tail = l.head
+		return
+	}
+
+	newNode := newNode(value)
+	slow := l.head
+	fast := l.head
+	for fast != nil && fast.next != nil && fast.next.next != nil {
+		slow = slow.next
+		fast = fast.next.next
+	}
+
+	newNode.next = slow.next
+	slow.next = newNode
+	if newNode.next == nil {
+		l.tail = newNode
+	}
+}
+
 func (l *LinkedList) RemoveToFront() *Node {
 	if l.head != nil {
 		removed := l.head
@@ -62,6 +85,21 @@ func (l *LinkedList) GetHead() *Node {
 
 func (l *LinkedList) GetTail() *Node {
 	return l.tail
+}
+
+func (l *LinkedList) GetFromTheMiddle() *Node {
+	if l.head == nil {
+		return &Node{}
+	}
+	head := l.head
+	ahead := l.head
+	for {
+		head = head.next
+		ahead = ahead.next.next
+		if ahead == nil {
+			return head
+		}
+	}
 }
 
 func (l *LinkedList) PrintLinkedList() {

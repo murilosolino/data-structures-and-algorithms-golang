@@ -101,3 +101,34 @@ func TestSearchValueInLinkedList(t *testing.T) {
 		t.Errorf("esperado: %v, recebido %v", 3, index)
 	}
 }
+func TestAddInTheMiddle(t *testing.T) {
+	linkedlist := linkedlist.NewLinkedList()
+	linkedlist.AddToEnd(1)
+	linkedlist.AddToEnd(2)
+	linkedlist.AddToEnd(3)
+	linkedlist.AddToEnd(4)
+	linkedlist.AddToEnd(5)
+	linkedlist.AddInTheMiddle(100)
+
+	index := linkedlist.SearchValueInLinkedList(100)
+	LastIndex := linkedlist.SearchValueInLinkedList(5)
+
+	if index >= LastIndex {
+		linkedlist.PrintLinkedList()
+		t.Errorf("Elemento não foi inserido no meio da lista. Index do último nó: %v, Index do elemento inserido: %v", LastIndex, index)
+	}
+}
+
+func TestGetFromTheMiddle(t *testing.T) {
+	linkedlist := linkedlist.NewLinkedList()
+	linkedlist.AddToEnd(1)
+	linkedlist.AddToEnd(2)
+	linkedlist.AddToEnd(3)
+	linkedlist.AddToEnd(4)
+
+	middleNode := linkedlist.GetFromTheMiddle()
+
+	if middleNode.Value != 3 {
+		t.Errorf("Não foi possível capturar o nó no meio da lista. esperado: %v, recebido: %v", 3, middleNode.Value)
+	}
+}
